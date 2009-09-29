@@ -12,8 +12,6 @@ import sys
 from Products.CMFCore import utils
 import LinkMapTool
 
-from Extensions import Install  # import to test syntax of install script on start
-del Install
 
 this_module = sys.modules[ __name__ ]
 product_globals = globals()
