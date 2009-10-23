@@ -26,17 +26,18 @@ $Id: $
 
 import Products.LinkMapTool
 
-from Products.RhaptosTest import base
+from Products.RhaptosTest.base import RhaptosTestCase
 
 
-base.PRODUCTS_TO_LOAD_ZCML = [('configure.zcml', Products.LinkMapTool),]
-base.PRODUCTS_TO_INSTALL = ['Products.LinkMapTool',]
+class TestLinkMapTool(RhaptosTestCase):
 
+    products_to_load_zcml = [('configure.zcml', Products.LinkMapTool),]
 
-class TestLinkMapTool(base.RhaptosTestCase):
+    def setUp(self):
+        RhaptosTestCase.setUp(self)
 
-    def test_pass(self):
-        assert 1 == 1
+    def test_link_map_tool(self):
+        self.assertEqual(1, 1)
 
 
 def test_suite():
