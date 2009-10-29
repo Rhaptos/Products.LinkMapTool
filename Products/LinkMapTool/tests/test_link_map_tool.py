@@ -26,6 +26,7 @@ $Id: $
 
 import Products.LinkMapTool
 
+from Products.LinkMapTool.LinkMapTool import LinkMapTool
 from Products.RhaptosTest.base import RhaptosTestCase
 
 
@@ -35,9 +36,11 @@ class TestLinkMapTool(RhaptosTestCase):
 
     def setUp(self):
         RhaptosTestCase.setUp(self)
+        self.link_map_tool = LinkMapTool()
 
     def test_link_map_tool(self):
-        self.assertEqual(1, 1)
+        links = self.link_map_tool.searchLinks()
+        self.assertEqual(len(links), 0)
 
 
 def test_suite():
