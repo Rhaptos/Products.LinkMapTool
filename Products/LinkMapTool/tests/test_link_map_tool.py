@@ -24,19 +24,22 @@ $Id: $
 """
 
 
+from Products.RhaptosTest import config
 import Products.LinkMapTool
+config.products_to_load_zcml = [('configure.zcml', Products.LinkMapTool),]
+config.products_to_install = ['LinkMapTool']
 
 from Products.LinkMapTool.LinkMapTool import LinkMapTool
-from Products.RhaptosTest.base import RhaptosTestCase
+from Products.RhaptosTest import base
 
 
-class TestLinkMapTool(RhaptosTestCase):
+class TestLinkMapTool(base.RhaptosTestCase):
 
-    products_to_load_zcml = [('configure.zcml', Products.LinkMapTool),]
-
-    def setUp(self):
-        RhaptosTestCase.setUp(self)
+    def afterSetUp(self):
         self.link_map_tool = LinkMapTool()
+
+    def beforeTearDown(self):
+        pass
 
     def test_link_map_tool(self):
         links = self.link_map_tool.searchLinks()
