@@ -26,9 +26,23 @@ $Id: $
 
 from Products.RhaptosTest import config
 import Products.LinkMapTool
-config.products_to_load_zcml = [('configure.zcml', Products.LinkMapTool),]
-config.products_to_install = ['LinkMapTool']
+import Products.RhaptosRepository
+config.products_to_load_zcml = [
+    ('configure.zcml', Products.LinkMapTool),
+    ('configure.zcml', Products.RhaptosRepository),
+]
+config.products_to_install = [
+    'Archetypes', 'CMFCore', 'CMFDefault', 'LinkMapTool', 'MailHost',
+    'MimetypesRegistry', 'PortalTransforms', 'RhaptosCollection',
+    'RhaptosHitCountTool', 'RhaptosModuleEditor', 'RhaptosRepository',
+    'ZAnnot', 'ZCTextIndex',
+]
+config.extension_profiles = [
+    'Products.LinkMapTool:default', 'Products.RhaptosCollection:default',
+    'Products.RhaptosRepository:default',
+]
 
+from Products.CMFCore.utils import getToolByName
 from Products.LinkMapTool.LinkMapTool import LinkMapTool
 from Products.RhaptosTest import base
 
@@ -36,14 +50,33 @@ from Products.RhaptosTest import base
 class TestLinkMapTool(base.RhaptosTestCase):
 
     def afterSetUp(self):
-        self.link_map_tool = LinkMapTool()
+        self.loginAsPortalOwner()
+
+        # FIXME:  This following chunk of code was copied and adapted from
+        # RhaptosRepository's setuphandlers.  We shouldn't have to do this
+        # stuff manually.  setuphandlers should get run when we install the
+        # RhaptosRepository product.
+        product = self.portal.manage_addProduct['RhaptosRepository']
+        product.manage_addRepository('content')
+        self.repo = self.portal.content
+
+        self.link_map_tool = getToolByName(self.portal, 'portal_linkmap')
 
     def beforeTearDown(self):
         pass
 
     def test_link_map_tool(self):
+        # Make sure that there are no links, initially.
         links = self.link_map_tool.searchLinks()
         self.assertEqual(len(links), 0)
+
+        # Add a link.
+        source = 'http://www.google.com/'
+        target = 'http://grab-it.appspot.com/'
+        title = 'grab-it - social bookmarking'
+        category = 'web 2.0'
+        strength = 100
+        self.link_map_tool.addLink(source, target, title, category, strength)
 
 
 def test_suite():
