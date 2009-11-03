@@ -44,6 +44,7 @@ config.extension_profiles = [
 
 from Products.CMFCore.utils import getToolByName
 from Products.LinkMapTool.LinkMapTool import LinkMapTool
+from Products.LinkMapTool.interfaces.portal_linkmap import portal_linkmap as ILinkMapTool
 from Products.RhaptosTest import base
 
 
@@ -65,18 +66,28 @@ class TestLinkMapTool(base.RhaptosTestCase):
     def beforeTearDown(self):
         pass
 
+    def test_interface(self):
+        # Make sure that link map tool implements the expected interface.
+        self.failUnless(ILinkMapTool.isImplementedBy(self.link_map_tool))
+
     def test_link_map_tool(self):
-        # Make sure that there are no links, initially.
-        links = self.link_map_tool.searchLinks()
+        # Make sure that there are no links with the source
+        # 'http://www.google.com/'.
+        links = self.link_map_tool.searchLinks(source='http://www.google.com/')
         self.assertEqual(len(links), 0)
 
-        # Add a link.
+        # Add a link with the source 'http://www.google.com/'.
         source = 'http://www.google.com/'
         target = 'http://grab-it.appspot.com/'
         title = 'grab-it - social bookmarking'
         category = 'web 2.0'
         strength = 100
         self.link_map_tool.addLink(source, target, title, category, strength)
+
+        # Make sure that there's a link with the source
+        # 'http://www.google.com/'.
+        links = self.link_map_tool.searchLinks(source='http://www.google.com/')
+        self.assertEqual(len(links), 1)
 
 
 def test_suite():
