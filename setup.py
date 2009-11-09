@@ -16,7 +16,7 @@ setup(name='Products.LinkMapTool',
       keywords='',
       author='Rhaptos team',
       author_email='rhaptos@cnx.org',
-/bin/bash: q: command not found
+      url="http://rhaptos.org",
       license='',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['Products', ],
