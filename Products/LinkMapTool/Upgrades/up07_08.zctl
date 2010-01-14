@@ -1,0 +1,8 @@
+from AccessControl.SecurityManagement import newSecurityManager
+from Products.CMFCore.tests.base.security import AnonymousUser, OmnipotentUser
+user = OmnipotentUser().__of__(app)
+newSecurityManager(None, user)
+
+app.plone.portal_quickinstaller.reinstallProducts(['LinkMapTool'])
+
+get_transaction().commit()

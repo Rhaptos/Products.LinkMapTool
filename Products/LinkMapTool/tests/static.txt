@@ -1,0 +1,14 @@
+Static Implementation Tests
+===========================
+ 	
+Let's just make sure that our static views are working as expected.
+	
+The first thing we need to do is to make sure the interfaces are
+being correctly implemented::
+ 	
+    >>> from Products.LinkMapTool.LinkMapTool import LinkMapTool
+    >>> LinkMapTool.id == 'portal_linkmap'
+    True
+    >>> LinkMapTool.meta_type == 'LinkMap Tool'
+    True
+
