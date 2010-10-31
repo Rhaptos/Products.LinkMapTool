@@ -18,7 +18,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Products.CMFCore.CMFCorePermissions import View, ManagePortal
+from Products.CMFCore.permissions import View, ManagePortal
 from interfaces.portal_linkmap import portal_linkmap as ILinkMapTool
 from Products.ZCatalog.ZCatalog import ZCatalog
 
