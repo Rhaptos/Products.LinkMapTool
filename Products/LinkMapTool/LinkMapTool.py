@@ -10,6 +10,9 @@ Public License Version 2.1 (LGPL).  See LICENSE.txt for details.
 
 import os
 import urlparse
+
+from zope.interface import implements
+
 import zLOG
 import AccessControl
 from Products.CMFCore.utils import UniqueObject
@@ -87,7 +90,7 @@ RisaLink = ExtendedLink
 
 class LinkMapTool(UniqueObject, BTreeFolder2):
 
-    __implements__ = (ILinkMapTool)
+    implements(ILinkMapTool)
 
     id = 'portal_linkmap'
     meta_type = 'LinkMap Tool'
